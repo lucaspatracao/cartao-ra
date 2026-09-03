@@ -4,50 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartão Profissional em RA — Lucas Patracão</title>
+    <meta name="description" content="Cartão profissional em Realidade Aumentada de Lucas Nunes Patracão.">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <title>Cartão Profissional em RA — Lucas Patracão</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
 
 <body>
 
-    <!-- Overlay inicial: some assim que a cena AR sinaliza "arReady" -->
     <div id="loading-overlay" role="status" aria-live="polite">
-        <h1>Cartão Profissional em Realidade Aumentada</h1>
-        <p>Permita o acesso à câmera e aponte para o cartão impresso.</p>
-        <div class="spinner" aria-hidden="true"></div>
+        <div class="card">
+            <h1>Cartão em Realidade Aumentada</h1>
+            <p>Permita o acesso à câmera e aponte para o cartão impresso para iniciar a experiência.</p>
+            <div class="spinner" aria-hidden="true"></div>
+        </div>
     </div>
 
-    <!-- Indicador de status de tracking, atualizado via script.js -->
-    <div id="tracking-status" aria-live="polite"></div>
+    <div id="tracking-status" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="label"></span>
+    </div>
 
     <a-scene mindar-image="imageTargetSrc: ./assets/targets/targets.mind; autoStart: true;" embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: true">
+
         <a-assets></a-assets>
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0" id="card-target">
 
-            <!-- Bloco 1: identificação -->
-            <a-plane position="0 0.3 0.04" width="1" height="0.22" color="#0D1117" opacity="0.85"
-                material="side: double"></a-plane>
-            <a-text value="Lucas Nunes Patracao\nTecnologo em ADS" color="#FFFFFF" align="center" position="0 0.3 0.05"
+            <!-- Bloco: identificação -->
+            <a-plane position="0 0.32 0.03" width="1.04" height="0.26" color="#14213D"
+                material="side: double; shader: flat"></a-plane>
+            <a-plane position="0 0.32 0.035" width="1" height="0.22" color="#FFFFFF"
+                material="side: double; shader: flat"></a-plane>
+            <a-text value="Lucas Nunes Patracao" color="#14213D" align="center" width="1.6" position="0 0.37 0.04"
                 scale="0.5 0.5 0.5"></a-text>
-
-            <!-- Bloco 2: skills -->
-            <a-plane position="0 0 0.04" width="1" height="0.18" color="#0D1117" opacity="0.85"
-                material="side: double"></a-plane>
-            <a-text value="JS | React Native | Node.js" color="#58A6FF" align="center" position="0 0 0.05"
+            <a-text value="Tecnologo em ADS" color="#2F6FED" align="center" width="1.6" position="0 0.27 0.04"
                 scale="0.4 0.4 0.4"></a-text>
 
-            <!-- Bloco 3: contato -->
-            <a-plane position="0 -0.3 0.04" width="1" height="0.18" color="#0D1117" opacity="0.85"
-                material="side: double"></a-plane>
-            <a-text value="github.com/lucaspatracao" color="#E6EDF3" align="center" position="0 -0.3 0.05"
-                scale="0.35 0.35 0.35"></a-text>
+            <!-- Bloco: stack técnica -->
+            <a-plane position="0 0 0.03" width="1.04" height="0.2" color="#14213D"
+                material="side: double; shader: flat"></a-plane>
+            <a-plane position="0 0 0.035" width="1" height="0.16" color="#FFFFFF"
+                material="side: double; shader: flat"></a-plane>
+            <a-text value="JavaScript | React Native | Node.js" color="#14213D" align="center" width="1.8"
+                position="0 0 0.04" scale="0.36 0.36 0.36"></a-text>
+
+            <!-- Bloco: contato -->
+            <a-plane position="0 -0.32 0.03" width="1.04" height="0.2" color="#14213D"
+                material="side: double; shader: flat"></a-plane>
+            <a-plane position="0 -0.32 0.035" width="1" height="0.16" color="#FFFFFF"
+                material="side: double; shader: flat"></a-plane>
+            <a-text value="github.com/lucaspatracao" color="#5C6784" align="center" width="1.6" position="0 -0.32 0.04"
+                scale="0.34 0.34 0.34"></a-text>
 
         </a-entity>
     </a-scene>
