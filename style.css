@@ -1,0 +1,55 @@
+:root {
+    --color-bg: #0d1117;
+    --color-text: #e6edf3;
+    --color-accent: #58a6ff;
+    --font-base: 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+header h1 {
+    font-size: 1.4rem;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+}
+
+main p {
+    font-size: 1rem;
+    max-width: 320px;
+}
+
+footer {
+    position: absolute;
+    bottom: 1rem;
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+/* Breakpoint simples para telas maiores */
+@media (min-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main p {
+        font-size: 1.2rem;
+        max-width: 480px;
+    }
+}
