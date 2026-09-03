@@ -1,0 +1,10 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+*.log
+
+# Node (caso use build tools futuramente)
+node_modules/
