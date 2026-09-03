@@ -11,29 +11,48 @@
 </head>
 
 <body>
+
+    <!-- Overlay inicial: some assim que a cena AR sinaliza "arReady" -->
+    <div id="loading-overlay" role="status" aria-live="polite">
+        <h1>Cartão Profissional em Realidade Aumentada</h1>
+        <p>Permita o acesso à câmera e aponte para o cartão impresso.</p>
+        <div class="spinner" aria-hidden="true"></div>
+    </div>
+
+    <!-- Indicador de status de tracking, atualizado via script.js -->
+    <div id="tracking-status" aria-live="polite"></div>
+
     <a-scene mindar-image="imageTargetSrc: ./assets/targets/targets.mind; autoStart: true;" embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: true">
-        <a-assets>
-            <!-- fontes/imagens auxiliares, se houver -->
-        </a-assets>
+        <a-assets></a-assets>
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0" id="card-target">
+
             <!-- Bloco 1: identificação -->
-            <a-text value="Lucas Nunes Patracao\nTecnologo em ADS" color="#FFFFFF" align="center" position="0 0.3 0"
+            <a-plane position="0 0.3 0.04" width="1" height="0.22" color="#0D1117" opacity="0.85"
+                material="side: double"></a-plane>
+            <a-text value="Lucas Nunes Patracao\nTecnologo em ADS" color="#FFFFFF" align="center" position="0 0.3 0.05"
                 scale="0.5 0.5 0.5"></a-text>
 
             <!-- Bloco 2: skills -->
-            <a-text value="JS | React Native | Node.js" color="#58A6FF" align="center" position="0 0 0"
+            <a-plane position="0 0 0.04" width="1" height="0.18" color="#0D1117" opacity="0.85"
+                material="side: double"></a-plane>
+            <a-text value="JS | React Native | Node.js" color="#58A6FF" align="center" position="0 0 0.05"
                 scale="0.4 0.4 0.4"></a-text>
 
             <!-- Bloco 3: contato -->
-            <a-text value="github.com/lucaspatracao" color="#8B949E" align="center" position="0 -0.3 0"
+            <a-plane position="0 -0.3 0.04" width="1" height="0.18" color="#0D1117" opacity="0.85"
+                material="side: double"></a-plane>
+            <a-text value="github.com/lucaspatracao" color="#E6EDF3" align="center" position="0 -0.3 0.05"
                 scale="0.35 0.35 0.35"></a-text>
+
         </a-entity>
     </a-scene>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
