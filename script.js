@@ -1,45 +1,56 @@
-// script.js
-// Aguarda o DOM e a cena A-Frame estarem prontos antes de manipular elementos
-document.addEventListener('DOMContentLoaded', () => {
-    const scene = document.querySelector('a-scene');
-    const target = document.querySelector('#card-target');
-    const loadingOverlay = document.querySelector('#loading-overlay');
-    const trackingStatus = document.querySelector('#tracking-status');
+"use strict";
 
-    if (!scene || !target) {
-        console.error('[RA] Elementos essenciais da cena não foram encontrados no DOM.');
+const STATUS = {
+    SEARCHING: "Procurando o cartão…",
+    FOUND: "Cartão reconhecido",
+};
+
+const dom = {
+    scene: document.querySelector("a-scene"),
+    target: document.querySelector("#card-target"),
+    overlay: document.querySelector("#loading-overlay"),
+    overlayMessage: document.querySelector("#loading-overlay p"),
+    status: document.querySelector("#tracking-status"),
+    statusLabel: document.querySelector("#tracking-status .label"),
+};
+
+function setTrackingStatus(message, isFound) {
+    dom.statusLabel.textContent = message;
+    dom.status.classList.add("visible");
+    dom.status.classList.toggle("found", isFound);
+}
+
+function hideOverlay() {
+    dom.overlay.classList.add("hidden");
+}
+
+function showCameraError() {
+    dom.overlay.classList.remove("hidden");
+    dom.overlayMessage.textContent =
+        "Não foi possível acessar a câmera. Verifique as permissões do navegador e recarregue a página.";
+}
+
+function bindSceneEvents() {
+    // 'arReady' dispara quando o MindAR termina de inicializar a câmera e o tracking
+    dom.scene.addEventListener("arReady", hideOverlay);
+    dom.scene.addEventListener("arError", (event) => {
+        console.error("[RA] Falha ao inicializar o MindAR:", event.detail);
+        showCameraError();
+    });
+}
+
+function bindTargetEvents() {
+    dom.target.addEventListener("targetFound", () => setTrackingStatus(STATUS.FOUND, true));
+    dom.target.addEventListener("targetLost", () => setTrackingStatus(STATUS.SEARCHING, false));
+}
+
+function init() {
+    if (!dom.scene || !dom.target) {
+        console.error("[RA] Elementos essenciais da cena AR não foram encontrados no DOM.");
         return;
     }
+    bindSceneEvents();
+    bindTargetEvents();
+}
 
-    // Atualiza o indicador de status fora da cena 3D (sempre visível, independente do target)
-    function setStatus(message, isFound) {
-        trackingStatus.textContent = message;
-        trackingStatus.classList.add('visible');
-        trackingStatus.classList.toggle('found', Boolean(isFound));
-    }
-
-    // 'arReady' é disparado pelo MindAR quando a câmera e o sistema de tracking terminam de inicializar
-    scene.addEventListener('arReady', () => {
-        console.log('[RA] Sistema MindAR pronto — câmera ativa.');
-        loadingOverlay.classList.add('hidden');
-    });
-
-    // Eventos nativos do MindAR: disparados a cada detecção/perda de tracking do target
-    target.addEventListener('targetFound', () => {
-        console.log('[RA] Cartão detectado — iniciando tracking.');
-        setStatus('Cartão reconhecido', true);
-    });
-
-    target.addEventListener('targetLost', () => {
-        console.log('[RA] Cartão fora de quadro — tracking pausado.');
-        setStatus('Procurando o cartão...', false);
-    });
-
-    // Fallback caso o navegador negue ou falhe ao acessar a câmera
-    scene.addEventListener('arError', (event) => {
-        loadingOverlay.classList.remove('hidden');
-        loadingOverlay.querySelector('p').textContent =
-            'Não foi possível acessar a câmera. Verifique as permissões do navegador e recarregue a página.';
-        console.error('[RA] Erro de inicialização do MindAR:', event.detail);
-    });
-});
+document.addEventListener("DOMContentLoaded", init);
